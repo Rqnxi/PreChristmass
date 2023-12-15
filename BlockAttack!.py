@@ -75,6 +75,8 @@ playerhp = 100
 #font
 font.init()
 font = font.SysFont('gamefont.ttf', 70)
+clock = time.Clock()
+arrcount = 0
 
 while game:
     for e in event.get():
@@ -84,26 +86,26 @@ while game:
     keys = key.get_pressed()
 
     if finish == False:
-        ranarrow = randint(1,62)
-        
+
         player = Player('player.png', 500, 500, 5, 50, 50)
         players.add(player)
-
+        arrcount += 1
+        ranarrow = randint(1,62)
         if ranarrow == 1:
-            print('LEFT')
-            L_arrow = LeftArrow('left_arrow.png', 0, 520, 15, 40, 5)
+            L_arrow = LeftArrow('left_arrow.png', 0, 520, 30, 60, 10)
             arrows.add(L_arrow)
+            print('LE')
+
         if ranarrow == 4:
-            print('RIGHT')
-            R_arrow = RightArrow('right_arrow.png', 1000, 520, 15, 40, 5)
+            R_arrow = RightArrow('right_arrow.png', 1000, 520, 30, 60, 10)
             arrows.add(R_arrow)
+
         if ranarrow == 8:
-            print('UP')
-            U_arrow = UpArrow('up_arrow.png', 520, 0, 15, 5, 40)
+            U_arrow = UpArrow('down_arrow.png', 520, 0, 30, 10, 60)
             arrows.add(U_arrow)
+
         if ranarrow == 12:
-            print('DOWN')
-            D_arrow = DownArrow('down_arrow.png', 520, 1000, 15, 5, 40)
+            D_arrow = DownArrow('up_arrow.png', 520, 1000, 30, 10, 60)
             arrows.add(D_arrow)
         
         if keys[K_LEFT]:
@@ -128,22 +130,21 @@ while game:
             down = True
         
         if up == True:
-
             Ublock = GameSprite('block_up.png', 475, 460, 0, 100, 10)
             delblocks()
             blocks.add(Ublock)
-        if down == True:
 
+        if down == True:
             Dblock = GameSprite('block_down.png', 475, 585, 0, 100, 10)
             delblocks()
             blocks.add(Dblock)
+        
         if left == True:
-
             Lblock = GameSprite('block_left.png', 450, 470, 0, 10, 100)
             delblocks()
             blocks.add(Lblock)
-        if right == True:
 
+        if right == True:
             Rblock = GameSprite('block_right.png', 590, 470, 0, 10, 100)
             delblocks()
             blocks.add(Rblock)
@@ -177,3 +178,4 @@ while game:
         arrows.draw(window)
         players.draw(window)
         display.update()
+        clock.tick(30)
