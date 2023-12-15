@@ -1,8 +1,6 @@
 from random import randint
 from pygame import *
 
-
-
 class GameSprite(sprite.Sprite):
     def __init__(self, p_image, p_x, p_y, speed, width, height):
         super().__init__()
@@ -48,6 +46,10 @@ def delblocks():
     for block in blocks:
         block.kill()
 
+def delarrows():
+    for arrow in arrows:
+        arrow.kill()
+
 blocks = sprite.Group()
 arrows = sprite.Group()
 players = sprite.Group()
@@ -59,7 +61,7 @@ background = transform.scale(image.load('background.png'), (1000, 1000))
 FPS = 60
 clock = time.Clock()
 
-player = Player('player.png', 500, 500, 5, 50, 50)
+player = Player('player0.png', 500, 500, 5, 50, 50)
 game = True
 finish = False
 
@@ -78,6 +80,11 @@ font = font.SysFont('gamefont.ttf', 70)
 clock = time.Clock()
 arrcount = 0
 
+#music
+mixer.init()
+mixer.music.load('music.mp3')
+mixer.music.play(-1)
+
 while game:
     for e in event.get():
         if e.type == QUIT:
@@ -86,15 +93,32 @@ while game:
     keys = key.get_pressed()
 
     if finish == False:
-
-        player = Player('player.png', 500, 500, 5, 50, 50)
+        if playerhp >= 91 and playerhp<= 100:
+            player = Player('player0.png', 500, 500, 5, 50, 50)
+        if playerhp >= 81 and playerhp<= 90:
+            player = Player('player1.png', 500, 500, 5, 50, 50)
+        if playerhp >= 71 and playerhp<= 80:
+            player = Player('player2.png', 500, 500, 5, 50, 50)
+        if playerhp >= 61 and playerhp<= 70:
+            player = Player('player3.png', 500, 500, 5, 50, 50)
+        if playerhp >= 51 and playerhp<= 60:
+            player = Player('player4.png', 500, 500, 5, 50, 50)
+        if playerhp >= 41 and playerhp<= 50:
+            player = Player('player5.png', 500, 500, 5, 50, 50)
+        if playerhp >= 31 and playerhp<= 40:
+            player = Player('player6.png', 500, 500, 5, 50, 50)
+        if playerhp >= 21 and playerhp<= 30:
+            player = Player('player7.png', 500, 500, 5, 50, 50)
+        if playerhp >= 11 and playerhp<= 20:
+            player = Player('player8.png', 500, 500, 5, 50, 50)
         players.add(player)
+        
         arrcount += 1
         ranarrow = randint(1,62)
+
         if ranarrow == 1:
             L_arrow = LeftArrow('left_arrow.png', 0, 520, 30, 60, 10)
             arrows.add(L_arrow)
-            print('LE')
 
         if ranarrow == 4:
             R_arrow = RightArrow('right_arrow.png', 1000, 520, 30, 60, 10)
@@ -170,7 +194,17 @@ while game:
         text_count = font.render('BLOCKED:' + str(BLOCKED), 1, (255,255,255))
         window.blit(text_count, (10, 50))
 
-    
+        if playerhp <= 0:
+            delarrows()
+            delblocks()
+            mixer.music.pause()
+            finish = True
+            lose = Player('LOSE.png', 150, 100, 5, 700, 420)
+            lose.update()
+            restart = Player('restart.png', 250, 590, 5, 500, 100)
+            restart.update()
+
+
         players.update()
         blocks.update()
         arrows.update()
@@ -179,3 +213,8 @@ while game:
         players.draw(window)
         display.update()
         clock.tick(30)
+        
+    if keys[K_SPACE] and playerhp <= 0:
+        finish = False
+        playerhp = 100
+        mixer.music.unpause()
