@@ -72,11 +72,11 @@ down = False
 left = False
 right = False
 BLOCKED = 0
-playerhp = 100
+playerhp = 10
 
 #font
 font.init()
-font = font.SysFont('gamefont.ttf', 70)
+font = font.SysFont('None', 70)
 clock = time.Clock()
 arrcount = 0
 
@@ -199,11 +199,14 @@ while game:
             delblocks()
             mixer.music.pause()
             finish = True
-            lose = Player('LOSE.png', 150, 100, 5, 700, 420)
-            lose.update()
-            restart = Player('restart.png', 250, 590, 5, 500, 100)
-            restart.update()
 
+            lose = Player('LOSE.png', 150, 100, 5, 700, 420)
+            restart = Player('restart.png', 250, 590, 5, 500, 100)
+            yer('press_space.png', 250, 700, 5, 150, 20)
+            press_space.update()
+            
+            restart.update()
+            lose.update()
 
         players.update()
         blocks.update()
@@ -216,5 +219,5 @@ while game:
         
     if keys[K_SPACE] and playerhp <= 0:
         finish = False
-        playerhp = 100
+        playerhp = 10
         mixer.music.unpause()
