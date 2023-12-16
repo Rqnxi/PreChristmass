@@ -202,8 +202,8 @@ while game:
 
             lose = Player('LOSE.png', 150, 100, 5, 700, 420)
             restart = Player('restart.png', 250, 590, 5, 500, 100)
-            yer('press_space.png', 250, 700, 5, 150, 20)
-            press_space.update()
+            space = Player('press_space.png', 250, 700, 5, 150, 20)
+            space.update()
             
             restart.update()
             lose.update()
